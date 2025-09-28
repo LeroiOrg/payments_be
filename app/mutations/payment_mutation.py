@@ -19,7 +19,7 @@ class PaymentMutation:
                 "failure": "https://5b6z290c-5173.use2.devtunnels.ms/pricing/failure",
                 "pending": "https://miapp.com/payments/pending",
             },
-            "notification_url": "https://5b6z290c-8000.use2.devtunnels.ms/webhooks/mercadopago"  # 👈 webhook
+            "notification_url": "https://5b6z290c-8000.use2.devtunnels.ms/webhooks/mercadopago"  # webhook
         }
 
 

@@ -7,6 +7,7 @@ import os
 load_dotenv()  # carga .env en os.environ
 
 MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
+ACCESS_TOKEN_PROVISIONAL = os.getenv("ACCESS_TOKEN_PROVISIONAL")
 
 router = APIRouter()
 UPDATE_CREDITS_URL = "http://3.16.158.35:8000/user-credits"
@@ -30,10 +31,12 @@ async def mercadopago_webhook(request: Request):
             print("Pago consultado:", payment_info)
 
             if payment_info.get("status") == "approved":
-                #ref_data = json.loads(external_reference)
-                email = "kristian.b2403@gmail.com"
-                credits_to_add = 250
-                user_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2LCJmaXJzdF9uYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0X25hbWUiOiIiLCJlbWFpbCI6ImtyaXN0aWFuLmIyNDAzQGdtYWlsLmNvbSIsInByb3ZpZGVyIjoiZW1haWwiLCJ0ZmFfZW5hYmxlZCI6ZmFsc2UsImV4cCI6MTc1OTAyOTE5MH0.LZTCVbGvdpi6ZiAmHvd-bRY7z6esR100tDI20maVUPQ"
+                ref_data = json.loads(payment_info.get("external_reference"))
+                email = ref_data["email"]
+                credits_to_add = ref_data["credits"]
+                credits_to_add_str = str(credits_to_add)
+                print("Creditos añadidos correctamente " + credits_to_add_str)
+                user_token = ACCESS_TOKEN_PROVISIONAL
 
                 # Llamar al endpoint PATCH
                 update_resp = requests.patch(
