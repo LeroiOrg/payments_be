@@ -1,13 +1,14 @@
 import strawberry
-from .payment_schema import PaymentMutation
-from .transaction_schema import TransactionMutation
+from app.schemas.price_schema import PriceQuery
+from app.mutations.payment_mutation import PaymentMutation
+from app.schemas.transaction_schema import TransactionMutation
 
 
 # -----------------------------
-# 📌 Query base
+# 📌 Query principal
 # -----------------------------
 @strawberry.type
-class Query:
+class Query(PriceQuery):   # hereda de PriceQuery
     @strawberry.field
     def ping(self) -> str:
         return "pong"
