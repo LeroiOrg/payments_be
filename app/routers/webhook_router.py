@@ -1,6 +1,12 @@
 from fastapi import APIRouter, Request
 import requests
 import json
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # carga .env en os.environ
+
+MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
 
 router = APIRouter()
 UPDATE_CREDITS_URL = "http://3.16.158.35:8000/user-credits"
@@ -17,7 +23,7 @@ async def mercadopago_webhook(request: Request):
             # Consultar pago en MercadoPago
             resp = requests.get(
                 f"https://api.mercadopago.com/v1/payments/{payment_id}",
-                headers={"Authorization": f"Bearer APP_USR-4772830502714206-092222-5b4d945840e0a3383252dbaebe85d300-2703406219"}
+                headers = {"Authorization": f"Bearer {MP_ACCESS_TOKEN}"}
             )
             resp.raise_for_status()  # <-- Esto lanza excepción si no es 2xx
             payment_info = resp.json()
