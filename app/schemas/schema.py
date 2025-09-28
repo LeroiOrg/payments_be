@@ -2,6 +2,7 @@ import strawberry
 from app.schemas.price_schema import PriceQuery
 from app.mutations.payment_mutation import PaymentMutation
 from app.schemas.transaction_schema import TransactionMutation
+from app.mutations.session_mutation import SessionMutation
 
 
 # -----------------------------
@@ -18,7 +19,7 @@ class Query(PriceQuery):   # hereda de PriceQuery
 # 📌 Mutations raíz
 # -----------------------------
 @strawberry.type
-class Mutation(PaymentMutation, TransactionMutation):
+class Mutation(PaymentMutation, TransactionMutation, SessionMutation):
     pass
 
 
