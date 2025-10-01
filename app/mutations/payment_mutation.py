@@ -1,7 +1,13 @@
 import strawberry
 from app.services.payment_service import MercadoPagoService
 from app.schemas.payment_schema import Payment, PreferenceInput, ItemType, PayerType
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+PAYMENT_BE_URL = os.getenv("PAYMENT_BE_URL")
+LEROI_FRONT = os.getenv("LEROI_FRONT")
 mp_service = MercadoPagoService()
 
 
@@ -15,11 +21,11 @@ class PaymentMutation:
             "external_reference": input.external_reference,
             "auto_return": "approved",
             "back_urls": {
-                "success": "https://5b6z290c-5173.use2.devtunnels.ms/pricing/success",
-                "failure": "https://5b6z290c-5173.use2.devtunnels.ms/pricing/failure",
-                "pending": "https://miapp.com/payments/pending",
+                "success": "{LEROI_FRONT}/pricing/success",
+                "failure": "{LEROI_FRONT}/pricing/success",
+                "pending": "{LEROI_FRONT}/pricing/pending",
             },
-            "notification_url": "https://5b6z290c-8000.use2.devtunnels.ms/webhooks/mercadopago"  # webhook
+            "notification_url": "{PAYMENT_BE_URL}",  # webhook
         }
 
 
