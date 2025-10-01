@@ -8,6 +8,7 @@ load_dotenv()
 
 PAYMENT_BE_URL = os.getenv("PAYMENT_BE_URL")
 LEROI_FRONT = os.getenv("LEROI_FRONT")
+YOUTUBE = os.getenv("YOUTUBE")
 mp_service = MercadoPagoService()
 
 
@@ -21,11 +22,11 @@ class PaymentMutation:
             "external_reference": input.external_reference,
             "auto_return": "approved",
             "back_urls": {
-                "success": "{LEROI_FRONT}/pricing/success",
-                "failure": "{LEROI_FRONT}/pricing/success",
-                "pending": "{LEROI_FRONT}/pricing/pending",
+                "success": f"{LEROI_FRONT}/pricing/success",
+                "failure": f"{LEROI_FRONT}/pricing/failure",
+                "pending": f"{LEROI_FRONT}",
             },
-            "notification_url": "{PAYMENT_BE_URL}",  # webhook
+            "notification_url": f"{PAYMENT_BE_URL}/webhooks/mercadopago",  # webhook
         }
 
 
