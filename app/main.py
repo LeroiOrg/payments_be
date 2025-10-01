@@ -17,7 +17,7 @@ try:
 except Exception as e:
     print(f"Error al conectar a la base de datos: {e}")
 
-app = FastAPI()
+app = FastAPI(title="Payments Services prueba", version="2.0")
 
 # CORS
 app.add_middleware(
@@ -35,7 +35,11 @@ async def ping():
 
 # GraphQL
 graphql_app = GraphQLRouter(schema, context_getter=get_context)
-app.include_router(graphql_app, prefix="/graphql")
+app.include_router(graphql_app, prefix="/payments-be", tags=["payments-be"])
 
 # REST: webhook
 app.include_router(webhook_router.router)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080)) 
+    uvicorn.run(app, host="0.0.0.0", port=port)
