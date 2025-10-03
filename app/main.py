@@ -1,3 +1,5 @@
+import os
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from strawberry.fastapi import GraphQLRouter
@@ -39,3 +41,7 @@ app.include_router(graphql_app, prefix="/graphql")
 
 # REST: webhook
 app.include_router(webhook_router.router)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080)) 
+    uvicorn.run(app, host="0.0.0.0", port=port)
