@@ -7,6 +7,10 @@ from app.schemas.schema import schema
 from app.routers import webhook_router
 from app.db.session import Base, engine
 from app.db.session import SessionLocal
+from dotenv import load_dotenv
+
+load_dotenv()
+LEROI_FRONT = os.getenv("LEROI_FRONT")
 
 def get_context():
     db = SessionLocal()
@@ -21,10 +25,12 @@ except Exception as e:
 
 app = FastAPI(title="Payments Services prueba", version="2.0")
 
+ALLOWED_ORIGINS = [LEROI_FRONT, "http://localhost:5173"]
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
