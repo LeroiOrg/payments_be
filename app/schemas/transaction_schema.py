@@ -6,7 +6,7 @@ mp_service = MercadoPagoService()
 
 
 # -----------------------------
-# 📌 Tipos
+# Tipos
 # -----------------------------
 @strawberry.type
 class Transaction:
@@ -17,7 +17,7 @@ class Transaction:
 
 
 # -----------------------------
-# 📌 Mutations
+# Mutations
 # -----------------------------
 @strawberry.type
 class TransactionMutation:
