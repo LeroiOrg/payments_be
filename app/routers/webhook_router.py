@@ -4,12 +4,12 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 from app.db.session import SessionLocal
 from app.models.credit_transaction import CreditTransaction
+from app.pubsub.pubsub_client import publish_event
 
 load_dotenv()
 router = APIRouter()
 
 MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
-UPDATE_CREDITS_URL = os.getenv("UPDATE_CREDITS_URL")  # URL de tu endpoint PATCH
 
 # Dependencia DB
 def get_db():
@@ -56,35 +56,29 @@ async def mercadopago_webhook(request: Request, db: Session = Depends(get_db)):
                 db.commit()
                 print(f"Créditos aprobados para {transaction.email}")
 
-                # Traer token y datos desde la DB
-                user_token = transaction.token
-                email = transaction.email
-                credits_to_add = transaction.credits
+                event_payload = {
+                    "email": transaction.email,
+                    "credits": transaction.credits,
+                    "session_id": transaction.session_id,
+                    "status": status,
+                    "payment_id": str(payment_id)
+                }
+                publish_event("payment_status_changed", event_payload)
 
-                if not user_token:
-                    raise Exception("Token de usuario no encontrado")
-
-                # Llamar al endpoint PATCH para actualizar créditos
-                update_resp = requests.patch(
-                    f"{UPDATE_CREDITS_URL}/{email}",
-                    headers={
-                        "Authorization": f"Bearer {user_token}",
-                        "Content-Type": "application/json"
-                    },
-                    json={"amount": credits_to_add}
-                )
-                update_resp.raise_for_status()
-                print("Update credits response:", update_resp.json())
+                print(f"Evento publicado en Pub/Sub: {event_payload}")
+                print("Update credits response:")
 
             elif status in ["rejected", "cancelled"]:
                 transaction.status = "failed"
                 db.commit()
                 print(f"Pago fallido para {transaction.email}")
+                publish_event("payment_status_changed", "Pago fallido")
 
             elif status == "pending":
                 transaction.status = "pending"
                 db.commit()
                 print(f"Pago pendiente para {transaction.email}")
+                publish_event("payment_status_changed", "Pago pendiente")
 
             else:
                 transaction.status = status

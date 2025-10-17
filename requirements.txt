@@ -8,6 +8,7 @@ SQLAlchemy==2.0.34
 pydantic==2.9.2
 starlette==0.38.5
 psycopg2-binary
+google-cloud-pubsub
 
 # ===== DEPENDENCIAS DE TESTING =====
 pytest==8.3.3

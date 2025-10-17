@@ -6,7 +6,7 @@ from app.mutations.session_mutation import SessionMutation
 
 
 # -----------------------------
-# 📌 Query principal
+# Query principal
 # -----------------------------
 @strawberry.type
 class Query(PriceQuery):   # hereda de PriceQuery
@@ -16,7 +16,7 @@ class Query(PriceQuery):   # hereda de PriceQuery
 
 
 # -----------------------------
-# 📌 Mutations raíz
+# Mutations raíz
 # -----------------------------
 @strawberry.type
 class Mutation(PaymentMutation, TransactionMutation, SessionMutation):
@@ -24,6 +24,6 @@ class Mutation(PaymentMutation, TransactionMutation, SessionMutation):
 
 
 # -----------------------------
-# 📌 Schema principal
+# Schema principal
 # -----------------------------
 schema = strawberry.Schema(query=Query, mutation=Mutation)
