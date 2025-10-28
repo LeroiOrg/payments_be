@@ -8,7 +8,6 @@ load_dotenv()
 
 PAYMENT_BE_URL = os.getenv("PAYMENT_BE_URL")
 LEROI_FRONT = os.getenv("LEROI_FRONT")
-YOUTUBE = os.getenv("YOUTUBE")
 mp_service = MercadoPagoService()
 
 

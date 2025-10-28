@@ -3,7 +3,7 @@ from typing import Optional, List
 
 
 # -----------------------------
-# 📌 Tipos (outputs)
+# Tipos (outputs)
 # -----------------------------
 @strawberry.type
 class ItemType:
@@ -31,7 +31,7 @@ class Payment:
 
 
 # -----------------------------
-# 📌 Inputs
+# Inputs
 # -----------------------------
 @strawberry.input
 class ItemInput:
