@@ -21,8 +21,8 @@ class PaymentMutation:
             "external_reference": input.external_reference,
             "auto_return": "approved",
             "back_urls": {
-                "success": f"{LEROI_FRONT}/pricing/success",
-                "failure": f"{LEROI_FRONT}/pricing/failure",
+                "success": f"{LEROI_FRONT}/paymentSuccess",
+                "failure": f"{LEROI_FRONT}/paymentFailure",
                 "pending": f"{LEROI_FRONT}",
             },
             "notification_url": f"{PAYMENT_BE_URL}/webhooks/mercadopago",  # webhook
