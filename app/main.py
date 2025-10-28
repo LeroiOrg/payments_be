@@ -25,7 +25,7 @@ except Exception as e:
 
 app = FastAPI(title="Payments Services prueba", version="2.0")
 
-ALLOWED_ORIGINS = [LEROI_FRONT, "http://localhost:5173","http://localhost:3000","http://localhost:3001",]
+ALLOWED_ORIGINS = [LEROI_FRONT, "http://localhost:5173","http://localhost:3000","http://localhost:3001","https://leroi-front-next.vercel.app"]
 
 # CORS
 app.add_middleware(
