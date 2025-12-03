@@ -37,9 +37,11 @@ app.add_middleware(
 )
 
 # Ruta de prueba
-@app.get("/ping")
-async def ping():
-    return {"status": "ok", "message": "Servidor funcionando"}
+@app.get("/")
+async def root_health_check():
+    # Devuelve una respuesta 200 OK
+    return {"status": "ok", "message": "Health Check Root"}
+
 
 # GraphQL
 graphql_app = GraphQLRouter(schema, context_getter=get_context)
